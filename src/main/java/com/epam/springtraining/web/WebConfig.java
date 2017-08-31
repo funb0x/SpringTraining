@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import java.io.IOException;
 
@@ -18,13 +20,22 @@ import java.io.IOException;
 @ComponentScan("com.epam.springtraining.mvc")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+//    @Bean
+//    public ViewResolver viewResolver() {
+//        InternalResourceViewResolver resolver =
+//                new InternalResourceViewResolver();
+//        resolver.setPrefix("/");
+//        resolver.setSuffix(".html");
+//        resolver.setExposeContextBeansAsAttributes(true);
+//        return resolver;
+//    }
+
     @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver resolver =
-                new InternalResourceViewResolver();
+    public FreeMarkerViewResolver freemarkerViewResolver() {
+        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+        resolver.setCache(true);
         resolver.setPrefix("/");
-        resolver.setSuffix(".html");
-        resolver.setExposeContextBeansAsAttributes(true);
+        resolver.setSuffix(".ftl");
         return resolver;
     }
 
@@ -34,11 +45,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/").setCachePeriod(Integer.MAX_VALUE);
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/").setCachePeriod(Integer.MAX_VALUE);
         registry.addResourceHandler("/**.html").addResourceLocations("classpath:/").setCachePeriod(Integer.MAX_VALUE);
+        registry.addResourceHandler("/**.ftl").addResourceLocations("classpath:/").setCachePeriod(Integer.MAX_VALUE);
     }
 
     @Bean
     public MultipartResolver multipartResolver() throws IOException {
         return new StandardServletMultipartResolver();
+    }
+
+    @Bean
+    public FreeMarkerConfigurer freemarkerConfig() {
+        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        freeMarkerConfigurer.setTemplateLoaderPath("classpath:/");
+        return freeMarkerConfigurer;
     }
 
 }
