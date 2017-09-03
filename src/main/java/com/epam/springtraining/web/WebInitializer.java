@@ -19,8 +19,4 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
         return new Class<?>[]{WebConfig.class};
     }
 
-    @Override
-    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement("D:\\tmp"));
-    }
 }

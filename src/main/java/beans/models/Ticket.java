@@ -1,6 +1,9 @@
 package beans.models;
 
+import util.CsvUtil;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +16,7 @@ public class Ticket {
 
     private long          id;
     private Event         event;
-    private LocalDateTime dateTime;
+    private Date dateTime;
     private String        seats;
     private User          user;
     private Double        price;
@@ -21,7 +24,15 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, String seats, User user, Double price) {
+    public Ticket(Event event, Date dateTime, List<Integer> seats, User user, double price) {
+        this(-1, event, dateTime, seats, user, price);
+    }
+
+    public Ticket(long id, Event event, Date dateTime, List<Integer> seats, User user, Double price) {
+        this(id, event, dateTime, CsvUtil.fromListToCsv(seats), user, price);
+    }
+
+    public Ticket(long id, Event event, Date dateTime, String seats, User user, Double price) {
         this.id = id;
         this.event = event;
         this.dateTime = dateTime;
@@ -46,11 +57,11 @@ public class Ticket {
         this.event = event;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -60,6 +71,14 @@ public class Ticket {
 
     public void setSeats(String seats) {
         this.seats = seats;
+    }
+
+    public void setSeatsList(List<Integer> seats) {
+        this.seats = CsvUtil.fromListToCsv(seats);
+    }
+
+    public List<Integer> getSeatsList() {
+        return CsvUtil.fromCsvToList(seats, Integer:: valueOf);
     }
 
     public User getUser() {

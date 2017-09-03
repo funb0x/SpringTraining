@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -19,16 +21,6 @@ import java.io.IOException;
 @EnableWebMvc
 @ComponentScan("com.epam.springtraining.mvc")
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver resolver =
-//                new InternalResourceViewResolver();
-//        resolver.setPrefix("/");
-//        resolver.setSuffix(".html");
-//        resolver.setExposeContextBeansAsAttributes(true);
-//        return resolver;
-//    }
 
     @Bean
     public FreeMarkerViewResolver freemarkerViewResolver() {
@@ -58,6 +50,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath("classpath:/");
         return freeMarkerConfigurer;
+    }
+
+    @Bean
+    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+        RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
+        handlerMapping.setUseSuffixPatternMatch(false);
+        handlerMapping.setUseTrailingSlashMatch(false);
+        return handlerMapping;
+
     }
 
 }

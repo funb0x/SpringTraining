@@ -20,6 +20,10 @@ public class Event {
     public Event() {
     }
 
+    public Event(String name) {
+        this.name = name;
+    }
+
     public Event(String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
         this(-1, name, rate, basePrice, dateTime, auditorium);
     }

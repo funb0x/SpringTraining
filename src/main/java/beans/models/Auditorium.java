@@ -1,5 +1,6 @@
 package beans.models;
 
+import util.CsvUtil;
 
 import java.util.List;
 
@@ -17,6 +18,14 @@ public class Auditorium {
     private String vipSeats;
 
     public Auditorium() {
+    }
+
+    public Auditorium(String name, int seatsNumber, List<Integer> vipSeats) {
+        this(-1, name, seatsNumber, vipSeats);
+    }
+
+    public Auditorium(long id, String name, int seatsNumber, List<Integer> vipSeats) {
+        this(id, name, seatsNumber, CsvUtil.fromListToCsv(vipSeats));
     }
 
     public Auditorium(long id, String name, int seatsNumber, String vipSeats) {
@@ -56,6 +65,14 @@ public class Auditorium {
 
     public String getVipSeats() {
         return vipSeats;
+    }
+
+    public List<Integer> getVipSeatsList() {
+        return CsvUtil.fromCsvToList(vipSeats, Integer:: valueOf);
+    }
+
+    public void setVipSeatsList(List<Integer> vipSeats) {
+        this.vipSeats = CsvUtil.fromListToCsv(vipSeats);
     }
 
     public void setVipSeats(String vipSeats) {

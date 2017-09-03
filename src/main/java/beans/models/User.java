@@ -1,6 +1,7 @@
 package beans.models;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,19 +14,19 @@ public class User {
     private long      id;
     private String    email;
     private String    name;
-    private LocalDate birthday;
+    private Date birthday;
 
     public User() {
     }
 
-    public User(long id, String email, String name, LocalDate birthday) {
+    public User(long id, String email, String name, Date birthday) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
     }
 
-    public User(String email, String name, LocalDate birthday) {
+    public User(String email, String name, Date birthday) {
         this(-1, email, name, birthday);
     }
 
@@ -57,11 +58,11 @@ public class User {
         this.name = name;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
