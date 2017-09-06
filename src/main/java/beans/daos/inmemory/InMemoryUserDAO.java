@@ -63,11 +63,11 @@ public class InMemoryUserDAO implements UserDAO {
     }
 
     public List<User> getAllByName(String name) {
-        return dbNameIndex.get(name).stream().collect(Collectors.toList());
+        return new ArrayList<>(dbNameIndex.get(name));
     }
 
     @Override
     public List<User> getAll() {
-        return db.values().stream().collect(Collectors.toList());
+        return new ArrayList<>(db.values());
     }
 }
