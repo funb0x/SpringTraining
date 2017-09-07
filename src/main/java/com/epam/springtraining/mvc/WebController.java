@@ -1,5 +1,6 @@
 package com.epam.springtraining.mvc;
 
+import beans.daos.UserDAO;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
@@ -11,6 +12,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,8 +34,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Controller
 public class WebController {
 
+    @Autowired
+    private UserDAO userDAO;
+
     private Map<String, User> stringUserMap;
     private List<Ticket> tickets;
+
+
 
     @PostConstruct
     private void init() {
@@ -123,6 +130,7 @@ public class WebController {
     @RequestMapping(value = "/user", method = GET)
     @ResponseBody
     public Collection<User> getAllUsers() throws IOException {
+        List<User> allUsers = userDAO.getAll();
         return stringUserMap.values();
     }
 
