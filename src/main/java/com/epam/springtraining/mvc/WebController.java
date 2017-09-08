@@ -6,7 +6,7 @@ import beans.models.Ticket;
 import beans.models.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import java.io.ByteArrayOutputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -39,8 +39,6 @@ public class WebController {
 
     private Map<String, User> stringUserMap;
     private List<Ticket> tickets;
-
-
 
     @PostConstruct
     private void init() {
@@ -92,7 +90,7 @@ public class WebController {
 
     @RequestMapping(value = "/tickets", method = GET)
     public ResponseEntity<byte[]> getBookedTickets() throws IOException {
-        ByteOutputStream bos = new ByteOutputStream();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try (PDDocument doc = new PDDocument()) {
             PDPage page = new PDPage();
             doc.addPage(page);
@@ -106,7 +104,7 @@ public class WebController {
             }
             doc.save(bos);
         }
-        byte[] contents = bos.getBytes();
+        byte[] contents = bos.toByteArray();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
