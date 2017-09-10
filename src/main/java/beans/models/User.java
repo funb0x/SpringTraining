@@ -1,5 +1,7 @@
 package beans.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -14,7 +16,10 @@ public class User {
     private long      id;
     private String    email;
     private String    name;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date birthday;
+    private String password;
+    private String roles;
 
     public User() {
     }
@@ -64,6 +69,22 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @Override

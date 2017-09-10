@@ -4,8 +4,10 @@ import beans.daos.AbstractDAO;
 import beans.daos.UserDAO;
 import beans.models.User;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +20,13 @@ import java.util.Objects;
 @Repository(value = "userDAO")
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
+    private StandardPasswordEncoder passwordEncoder;
+
+    @PostConstruct
+    private void init(){
+        passwordEncoder = new StandardPasswordEncoder("springTraining");
+    }
+
     @Override
     public User create(User user) {
         UserDAO.validateUser(user);
@@ -27,6 +36,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
                     String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user,
                                   user.getEmail()));
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             Long userId = (Long) getCurrentSession().save(user);
             return user.withId(userId);
         }

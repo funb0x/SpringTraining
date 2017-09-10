@@ -1,9 +1,9 @@
 package com.epam.springtraining.mvc;
 
-import beans.daos.UserDAO;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.services.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class WebController {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
     private Map<String, User> stringUserMap;
     private List<Ticket> tickets;
@@ -127,9 +127,34 @@ public class WebController {
 
     @RequestMapping(value = "/user", method = GET)
     @ResponseBody
-    public Collection<User> getAllUsers() throws IOException {
-        List<User> allUsers = userDAO.getAll();
-        return stringUserMap.values();
+    public Collection<User> getAllUsers() {
+        return userService.getRegisteredUsers();
     }
+
+    @RequestMapping(value = "/register_user", method = POST)
+    public String registerUser(User user) {
+        user.setRoles("ROLE_REGISTERED_USER");
+        userService.register(user);
+        return "index";
+    }
+
+    @RequestMapping(value = "/register_manager", method = POST)
+    public String registerManager(User user) {
+        user.setRoles("ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER");
+        userService.register(user);
+        return "index";
+    }
+
+//    @RequestMapping(value = "/login", method = POST)
+//    public String login(String email, String password) {
+//
+//        return "index";
+//    }
+
+    @RequestMapping(value = "/login", method = GET)
+    public String loginView() {
+        return "login";
+    }
+
 
 }

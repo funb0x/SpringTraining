@@ -13,7 +13,7 @@
         <input type="submit" value="Submit">
     </form>
 -----------------------------------------------------------------------------<br>
-    for getTicketPrice mapping<br>
+    for book ticket mapping<br>
     <form action="book_ticket" method="post" enctype="multipart/form-data">
         Event name: <input type="text" name="event.name"><br>
         Date: <input type="date" name="date"><br>
@@ -38,4 +38,24 @@
 -----------------------------------------------------------------------------<br>
     json of all users
     http://localhost:8080/user
+    for getTicketPrice mapping<br>
+-----------------------------------------------------------------------------<br>
+    register a user
+    <form action="register_user" method="post" enctype="multipart/form-data">
+        Email: <input type="text" name="email"><br>
+        Name: <input type="text" name="name"><br>
+        Date: <input type="date" name="birthday"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+-----------------------------------------------------------------------------<br>
+    register a manager
+    <form action="register_manager" method="post" enctype="multipart/form-data">
+        Email: <input type="text" name="email"><br>
+        Name: <input type="text" name="name"><br>
+        Date: <input type="date" name="birthday"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+-----------------------------------------------------------------------------<br>
 </div>
