@@ -20,7 +20,8 @@ public class User {
     private Date birthday;
     private String password;
     private String roles;
-
+    private UserAccount account;
+    
     public User() {
     }
 
@@ -87,6 +88,15 @@ public class User {
         this.roles = roles;
     }
 
+    public UserAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(UserAccount account) {
+        this.account = account;
+    }
+ 
+    
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -96,23 +106,12 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id)
-            return false;
-        if (email != null ? !email.equals(user.email) : user.email != null)
-            return false;
-        if (name != null ? !name.equals(user.name) : user.name != null)
-            return false;
-        return birthday != null ? birthday.equals(user.birthday) : user.birthday == null;
-
+        return id == user.id; 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        return result;
+        return (int) (id ^ (id >>> 32));
     }
 
     @Override

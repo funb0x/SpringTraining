@@ -3,6 +3,7 @@ package beans.daos.db;
 import beans.daos.AbstractDAO;
 import beans.daos.UserDAO;
 import beans.models.User;
+import beans.models.UserAccount;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public User create(User user) {
+        UserAccount userAccount = new UserAccount(200.0);
+        userAccount.setUser(user);
+        
+        user.setAccount(userAccount);
         UserDAO.validateUser(user);
         User byEmail = getByEmail(user.getEmail());
         if (Objects.nonNull(byEmail)) {

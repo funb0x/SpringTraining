@@ -12,17 +12,15 @@
 
 <hibernate-mapping package="beans.models">
 
-    <class name="User" table="USER">
+    <class name="UserAccount" table="USER_ACCOUNT">
         <id name="id" column="ID">
-            <generator class="identity"/>
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
         </id>
-        <property name="email" column="EMAIL" type="string" unique="true"/>
-        <property name="name" column="NAME" type="string"/>
-        <property name="birthday" type="java.util.Date" column="BIRTH_DATE"/>
-        <property name="password" type="string" column="PASSWORD"/>
-        <property name="roles" type="string" column="ROLES"/>
         
-        <one-to-one name="account" cascade="all" class="beans.models.UserAccount"/>        
+        <property name="value" column="VALUE" type="double"/>
+        <one-to-one name="user" constrained="true" class="User" />
     </class>
 
 </hibernate-mapping>

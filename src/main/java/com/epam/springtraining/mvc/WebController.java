@@ -128,7 +128,8 @@ public class WebController {
     @RequestMapping(value = "/user", method = GET)
     @ResponseBody
     public Collection<User> getAllUsers() {
-        return userService.getRegisteredUsers();
+        Collection<User> users = userService.getRegisteredUsers();
+        return users;
     }
 
     @RequestMapping(value = "/register_user", method = POST)
@@ -144,12 +145,6 @@ public class WebController {
         userService.register(user);
         return "index";
     }
-
-//    @RequestMapping(value = "/login", method = POST)
-//    public String login(String email, String password) {
-//
-//        return "index";
-//    }
 
     @RequestMapping(value = "/login", method = GET)
     public String loginView() {
