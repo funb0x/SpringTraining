@@ -5,6 +5,8 @@
  */
 package beans.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Oleg_Tymchak
@@ -13,6 +15,7 @@ public class UserAccount {
     
     private long id;
     private double        value;
+    @JsonIgnore
     private User user;
     
     public UserAccount() {

@@ -2,10 +2,7 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.BookingDAO;
-import beans.models.Booking;
-import beans.models.Event;
-import beans.models.Ticket;
-import beans.models.User;
+import beans.models.*;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +22,12 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
         BookingDAO.validateTicket(ticket);
         BookingDAO.validateUser(user);
 
+        UserAccount account = user.getAccount();
+        if (account.getValue() < ticket.getPrice()) {
+            throw new RuntimeException("not enough money on user account to book a ticket");
+        } else {
+            account.setValue(account.getValue() - ticket.getPrice());
+        }
         Long ticketId = (Long) getCurrentSession().save(ticket);
         Ticket storedTicket = ticket.withId(ticketId);
         Booking booking = new Booking(user, storedTicket);
@@ -45,8 +48,8 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Ticket> getTickets(Event event) {
-        Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.ticket.event = :event");
-        query.setParameter("event", event);
+        Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.ticket.event.name = :event");
+        query.setParameter("event", event.getName());
         return ((List<Ticket>) query.list());
     }
 

@@ -3,6 +3,7 @@ package com.epam.springtraining.mvc;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.services.BookingService;
 import beans.services.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +37,9 @@ public class WebController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BookingService bookingService;
+
 
     private Map<String, User> stringUserMap;
     private List<Ticket> tickets;
@@ -73,9 +77,9 @@ public class WebController {
 
     @RequestMapping(value = "/book_ticket", method = POST)
     public String bookTicket(User user, @DateTimeFormat(pattern="yyyy-MM-dd") Date date, Ticket ticket) {
-        System.out.println(user);
-        System.out.println(date);
-        System.out.println(ticket);
+        Random random = new Random();
+        ticket.setPrice(100.0 + 100.* random.nextDouble());
+        bookingService.bookTicket(user, ticket);
         return "index";
     }
 
