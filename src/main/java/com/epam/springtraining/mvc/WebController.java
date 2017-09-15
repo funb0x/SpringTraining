@@ -28,6 +28,8 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -46,9 +48,16 @@ public class WebController {
 
     @PostConstruct
     private void init() {
-        User user1 = new User("JohnDoe@aol.com", "John Doe", new Date(1990, 01, 10));
-        User user2 = new User("BobSmith@aol.com", "Bob Smith", new Date(1990, 01, 10));
+        User user1 = new User("m@m.com", "John Doe", new Date(1990, 01, 10));
+        user1.setRoles("ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER");
+        user1.setPassword("111");
+        User user2 = new User("u@u.com", "Bob Smith", new Date(1990, 01, 10));
+        user2.setRoles("ROLE_REGISTERED_USER");
+        user2.setPassword("222");
 
+        userService.register(user1);
+        userService.register(user2);
+        
         stringUserMap = new HashMap<>();
         stringUserMap.put("JohnDoe@aol.com", user1);
         stringUserMap.put("BobSmith@aol.com", user2);
@@ -78,7 +87,7 @@ public class WebController {
     @RequestMapping(value = "/book_ticket", method = POST)
     public String bookTicket(User user, @DateTimeFormat(pattern="yyyy-MM-dd") Date date, Ticket ticket) {
         Random random = new Random();
-        ticket.setPrice(100.0 + 100.* random.nextDouble());
+        ticket.setPrice(100.0 + 110.* random.nextDouble());
         bookingService.bookTicket(user, ticket);
         return "index";
     }
@@ -102,8 +111,15 @@ public class WebController {
             try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
                 contents.beginText();
                 contents.setFont(font, 12);
-                contents.newLineAtOffset(100, 700);
-                contents.showText(String.join("", tickets.stream().map(Object::toString).collect(Collectors.toList())));
+                contents.newLineAtOffset(0, 0);
+                bookingService.getAllTickets().stream().forEach(s -> {
+                    try {
+                        contents.showText(s.toString());
+                        contents.newLine();
+                    } catch (IOException ex) {
+                        Logger.getLogger(WebController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
                 contents.endText();
             }
             doc.save(bos);

@@ -152,4 +152,11 @@ public class BookingServiceImpl implements BookingService {
         final Event foundEvent = eventService.getEvent(event, auditorium, date);
         return bookingDAO.getTickets(foundEvent);
     }
+
+    @Override
+    public List<Ticket> getAllTickets() {
+        return bookingDAO.getAllTickets();                
+    }
+    
+    
 }

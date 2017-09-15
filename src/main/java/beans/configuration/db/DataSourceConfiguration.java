@@ -1,11 +1,14 @@
 package beans.configuration.db;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import net.sf.log4jdbc.ConnectionSpy;
 
 import javax.sql.DataSource;
 
@@ -33,7 +36,12 @@ public class DataSourceConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, user, password);
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, user, password) {
+            @Override
+            public Connection getConnection() throws SQLException {
+                return new net.sf.log4jdbc.ConnectionSpy(super.getConnection());
+            }
+        };
         driverManagerDataSource.setDriverClassName(driver);
         return driverManagerDataSource;
     }
