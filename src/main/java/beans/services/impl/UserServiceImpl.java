@@ -1,8 +1,10 @@
 package beans.services.impl;
 
+import beans.daos.UserAccountDAO;
 import beans.daos.UserDAO;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.models.UserAccount;
 import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(User user) {
+        UserAccount userAccount = new UserAccount(200.0);
+        userAccount.setUser(user);
+        user.setAccount(userAccount);
         return userDAO.create(user);
     }
 

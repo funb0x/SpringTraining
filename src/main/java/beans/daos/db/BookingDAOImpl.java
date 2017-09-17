@@ -22,12 +22,6 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
         BookingDAO.validateTicket(ticket);
         BookingDAO.validateUser(user);
 
-        UserAccount account = user.getAccount();
-        if (account.getValue() < ticket.getPrice()) {
-            throw new RuntimeException("not enough money on user account to book a ticket");
-        } else {
-            account.setValue(account.getValue() - ticket.getPrice());
-        }
         Long ticketId = (Long) getCurrentSession().save(ticket);
         Ticket storedTicket = ticket.withId(ticketId);
         Booking booking = new Booking(user, storedTicket);

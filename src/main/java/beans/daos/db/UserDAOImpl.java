@@ -30,10 +30,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public User create(User user) {
-        UserAccount userAccount = new UserAccount(200.0);
-        userAccount.setUser(user);
-        
-        user.setAccount(userAccount);
+
         UserDAO.validateUser(user);
         User byEmail = getByEmail(user.getEmail());
         if (Objects.nonNull(byEmail)) {

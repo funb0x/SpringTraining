@@ -31,6 +31,7 @@ public class BookingServiceImpl implements BookingService {
     private final AuditoriumService auditoriumService;
     private final UserService userService;
     private final BookingDAO        bookingDAO;
+    private final UserAccountService userAccountService;
     final         int               minSeatNumber;
     final         double            vipSeatPriceMultiplier;
     final         double            highRatedPriceMultiplier;
@@ -41,6 +42,7 @@ public class BookingServiceImpl implements BookingService {
                               @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
                               @Qualifier("userServiceImpl") UserService userService,
                               @Qualifier("bookingDAO") BookingDAO bookingDAO,
+                              UserAccountService userAccountService,
                               @Value("${min.seat.number}") int minSeatNumber,
                               @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
                               @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
@@ -49,6 +51,7 @@ public class BookingServiceImpl implements BookingService {
         this.auditoriumService = auditoriumService;
         this.userService = userService;
         this.bookingDAO = bookingDAO;
+        this.userAccountService = userAccountService;
         this.minSeatNumber = minSeatNumber;
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
@@ -138,10 +141,12 @@ public class BookingServiceImpl implements BookingService {
         List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());
         boolean seatsAreAlreadyBooked = bookedTickets.stream().anyMatch(bookedTicket -> ticket.getSeatsList().stream().anyMatch(bookedTicket.getSeatsList() :: contains));
 
-        if (!seatsAreAlreadyBooked)
+        if (!seatsAreAlreadyBooked) {
+            userAccountService.withdrawMoney(foundUser.getAccount(), ticket.getPrice());
             bookingDAO.create(foundUser, ticket);
-        else
+        } else {
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+        }
 
         return ticket;
     }
