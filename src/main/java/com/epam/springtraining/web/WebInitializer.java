@@ -2,6 +2,7 @@ package com.epam.springtraining.web;
 
 import com.epam.springtraining.app.AppConfig;
 import com.epam.springtraining.security.SecurityConfig;
+import com.epam.springtraining.ws.WebServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
@@ -13,7 +14,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     }
 
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {AppConfig.class, SecurityConfig.class};
+        return new Class<?>[] {AppConfig.class, SecurityConfig.class, WebServiceConfig.class};
     }
 
     protected Class<?>[] getServletConfigClasses() {

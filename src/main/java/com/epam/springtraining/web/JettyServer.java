@@ -1,6 +1,7 @@
 package com.epam.springtraining.web;
 
 import com.epam.springtraining.security.SecurityWebInitializer;
+import com.epam.springtraining.ws.ServletWebAppInitializer;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.annotations.ClassInheritanceHandler;
 import org.eclipse.jetty.server.*;
@@ -24,6 +25,7 @@ public class JettyServer {
                         map.put(WebApplicationInitializer.class.getName(), new ConcurrentHashSet<String>() {{
                             add(WebInitializer.class.getName());
                             add(SecurityWebInitializer.class.getName());
+                            add(ServletWebAppInitializer.class.getName());
                         }});
                         context.setAttribute(CLASS_INHERITANCE_MAP, map);
                         _classInheritanceHandler = new ClassInheritanceHandler(map);
