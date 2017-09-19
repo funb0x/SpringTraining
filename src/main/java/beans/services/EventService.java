@@ -3,7 +3,7 @@ package beans.services;
 import beans.models.Auditorium;
 import beans.models.Event;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,15 +18,15 @@ public interface EventService {
 
     public void remove(Event event);
 
-    Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime);
+    Event getEvent(String name, Auditorium auditorium, Date dateTime);
 
     public List<Event> getByName(String name);
 
     public List<Event> getAll();
 
-    public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to);
+    public List<Event> getForDateRange(Date from, Date to);
 
-    public List<Event> getNextEvents(LocalDateTime to);
+    public List<Event> getNextEvents(Date to);
 
-    public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date);
+    public Event assignAuditorium(Event event, Auditorium auditorium, Date date);
 }

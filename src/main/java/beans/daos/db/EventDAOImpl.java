@@ -9,7 +9,7 @@ import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +42,7 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     }
 
     @Override
-    public Event get(String eventName, Auditorium auditorium, LocalDateTime dateTime) {
+    public Event get(String eventName, Auditorium auditorium, Date dateTime) {
         LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
                                                          Restrictions.eq("name", eventName));
         return ((Event) createBlankCriteria(Event.class).add(nameAndDate).createAlias("auditorium", "aud").add(
@@ -62,7 +62,7 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Event> getByNameAndDate(String name, LocalDateTime dateTime) {
+    public List<Event> getByNameAndDate(String name, Date dateTime) {
         LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
                                                          Restrictions.eq("name", name));
         return ((List<Event>) createBlankCriteria(Event.class).add(nameAndDate).list());
@@ -76,19 +76,19 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to) {
+    public List<Event> getForDateRange(Date from, Date to) {
         return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.between("dateTime", from, to)).list());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Event> getNext(LocalDateTime to) {
+    public List<Event> getNext(Date to) {
         return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.le("dateTime", to)).list());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Event> getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime date) {
+    public List<Event> getByAuditoriumAndDate(Auditorium auditorium, Date date) {
         Query query = getCurrentSession().createQuery(
                 "from Event e where e.auditorium = :auditorium and e.dateTime = :dateTime");
         query.setParameter("auditorium", auditorium);

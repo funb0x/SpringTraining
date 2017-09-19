@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ public class EventServiceImpl implements EventService {
         return eventDAO.getByName(name);
     }
 
-    public Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime) {
+    public Event getEvent(String name, Auditorium auditorium, Date dateTime) {
         return eventDAO.get(name, auditorium, dateTime);
     }
 
@@ -49,15 +49,15 @@ public class EventServiceImpl implements EventService {
         return eventDAO.getAll();
     }
 
-    public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to) {
+    public List<Event> getForDateRange(Date from, Date to) {
         return eventDAO.getForDateRange(from, to);
     }
 
-    public List<Event> getNextEvents(LocalDateTime to) {
+    public List<Event> getNextEvents(Date to) {
         return eventDAO.getNext(to);
     }
 
-    public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date) {
+    public Event assignAuditorium(Event event, Auditorium auditorium, Date date) {
         final Event updatedEvent = new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(), date, auditorium);
         return eventDAO.update(updatedEvent);
     }

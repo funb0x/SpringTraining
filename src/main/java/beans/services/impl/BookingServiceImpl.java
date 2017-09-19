@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -76,7 +78,7 @@ public class BookingServiceImpl implements BookingService {
 
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
 
-        final Event event = eventService.getEvent(eventName, auditorium, dateTime);
+        final Event event = eventService.getEvent(eventName, auditorium, Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
                     "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
@@ -154,7 +156,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Ticket> getTicketsForEvent(String event, String auditoriumName, LocalDateTime date) {
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-        final Event foundEvent = eventService.getEvent(event, auditorium, date);
+        final Event foundEvent = eventService.getEvent(event, auditorium, Date.from(date.atZone(ZoneId.systemDefault()).toInstant()));
         return bookingDAO.getTickets(foundEvent);
     }
 

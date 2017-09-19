@@ -1,6 +1,7 @@
 package beans.models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,7 @@ public class Event {
     private String        name;
     private Rate          rate;
     private double        basePrice;
-    private LocalDateTime dateTime;
+    private Date dateTime;
     private Auditorium    auditorium;
 
     public Event() {
@@ -24,11 +25,11 @@ public class Event {
         this.name = name;
     }
 
-    public Event(String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
+    public Event(String name, Rate rate, double basePrice, Date dateTime, Auditorium auditorium) {
         this(-1, name, rate, basePrice, dateTime, auditorium);
     }
 
-    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
+    public Event(long id, String name, Rate rate, double basePrice, Date dateTime, Auditorium auditorium) {
         this.id = id;
         this.name = name;
         this.rate = rate;
@@ -73,11 +74,11 @@ public class Event {
         this.basePrice = basePrice;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

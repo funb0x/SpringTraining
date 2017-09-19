@@ -24,15 +24,15 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean(name = "countries")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-//        wsdl11Definition.setPortTypeName("CountriesPort");
-//        wsdl11Definition.setLocationUri("/ws");
-//        wsdl11Definition.setTargetNamespace("http://company.com/country-web-service");
+        wsdl11Definition.setPortTypeName("service");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace("http://www.models.beans/SpringTrainingWs");
         wsdl11Definition.setSchema(countriesSchema);
         return wsdl11Definition;
     }
 
     @Bean
     public XsdSchema countriesSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("ws/schema.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("ws/schema1.xsd"));
     }
 }

@@ -3,7 +3,7 @@ package beans.daos;
 import beans.models.Auditorium;
 import beans.models.Event;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,21 +19,21 @@ public interface EventDAO {
 
     Event update(Event event);
 
-    Event get(String eventName, Auditorium auditoriumName, LocalDateTime dateTime);
+    Event get(String eventName, Auditorium auditoriumName, Date dateTime);
 
     void delete(Event event);
 
     List<Event> getByName(String name);
 
-    List<Event> getByNameAndDate(String name, LocalDateTime dateTime);
+    List<Event> getByNameAndDate(String name, Date dateTime);
 
     List<Event> getAll();
 
-    List<Event> getForDateRange(LocalDateTime from, LocalDateTime to);
+    List<Event> getForDateRange(Date from, Date to);
 
-    List<Event> getNext(LocalDateTime to);
+    List<Event> getNext(Date to);
 
-    List<Event> getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime date);
+    List<Event> getByAuditoriumAndDate(Auditorium auditorium, Date date);
 
     static void validateEvent(Event event) {
         if (Objects.isNull(event)) {
