@@ -17,9 +17,10 @@ public class ServletWebAppInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
 
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-        applicationContext.register(AppConfig.class, WebServiceConfig.class);
+        applicationContext.register(WebServiceConfig.class);
 
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+        servlet.setContextClass(AnnotationConfigWebApplicationContext.class);
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
 
