@@ -5,10 +5,7 @@ import beans.models.gen.User;
 import beans.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ws.server.endpoint.annotation.Endpoint;
-import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
-import org.springframework.ws.server.endpoint.annotation.RequestPayload;
-import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import org.springframework.ws.server.endpoint.annotation.*;
 
 import javax.xml.bind.JAXBElement;
 
@@ -33,9 +30,9 @@ public class SpringTrainingEndpoint {
 
     @PayloadRoot(localPart = "userByIdRequest")
     @ResponsePayload
-    public User getById(@RequestPayload JAXBElement<Long> id) {
+    public User getById(@XPathParam("/userByIdRequest/id") long id) {
         ObjectFactory objectFactory = new ObjectFactory();
-        beans.models.User foundUser = userService.getById(1);
+        beans.models.User foundUser = userService.getById(id);
 
         if (foundUser != null) {
             User user = objectFactory.createUser();
