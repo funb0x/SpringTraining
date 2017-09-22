@@ -1,6 +1,5 @@
 package com.epam.springtraining.ws;
 
-import com.epam.springtraining.app.AppConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
