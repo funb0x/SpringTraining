@@ -70,7 +70,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "password",
     "roles"
 })
-@XmlRootElement
+@XmlRootElement(name="user")
 public class User {
 
     @XmlElement(required = true)
@@ -278,7 +278,7 @@ public class User {
     @XmlType(name = "", propOrder = {
         "entry"
     })
-    @XmlRootElement
+    @XmlRootElement(name="account")
     public static class Account {
 
         protected List<User.Account.Entry> entry;

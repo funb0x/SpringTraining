@@ -4,6 +4,7 @@ import beans.models.Ticket;
 import beans.models.User;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface BookingService {
 
-    double getTicketPrice(String event, String auditorium, LocalDateTime dateTime, List<Integer> seats, User user);
+    double getTicketPrice(String event, String auditorium, Date dateTime, List<Integer> seats, User user);
 
     Ticket bookTicket(User user, Ticket ticket);
 
