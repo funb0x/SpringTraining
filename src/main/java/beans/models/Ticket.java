@@ -1,5 +1,7 @@
 package beans.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import util.CsvUtil;
 
 import java.time.LocalDateTime;
@@ -12,12 +14,14 @@ import java.util.List;
  * Date: 2/1/2016
  * Time: 7:37 PM
  */
+@JsonIgnoreProperties
 public class Ticket {
 
     private long          id;
     private Event         event;
     private Date dateTime;
     private String        seats;
+    @JsonIgnore
     private User          user;
     private Double        price;
 

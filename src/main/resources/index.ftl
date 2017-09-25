@@ -9,7 +9,6 @@
         Auditorium name: <input type="text" name="auditoriumName"><br>
         Date: <input type="date" name="dateTime"><br>
         Seats: <input type="text" name="seats"><br>
-        User Name: <input type="text" name="name"><br>
         <input type="submit" value="Submit">
     </form>
 -----------------------------------------------------------------------------<br>

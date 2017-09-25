@@ -1,4 +1,4 @@
-package com.epam.springtraining.ws;
+package com.epam.springtraining;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
 
-public class SpringTrainingEndpointTest {
+public class SpringTrainingSoapWSTest {
     private static WebServiceTemplate webServiceTemplate;
 
 

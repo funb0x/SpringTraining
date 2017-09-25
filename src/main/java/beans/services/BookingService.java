@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface BookingService {
 
-    double getTicketPrice(String event, String auditorium, Date dateTime, List<Integer> seats, User user);
+    double getTicketPrice(String event, String auditorium, Date dateTime, List<Integer> seats);
 
     Ticket bookTicket(User user, Ticket ticket);
 
