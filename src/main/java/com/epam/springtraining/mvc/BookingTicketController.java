@@ -31,10 +31,12 @@ public class BookingTicketController {
 
     @RequestMapping(value = "/book", method = POST)
     @ResponseBody
-    public Ticket bookTicket(User user, Date date, Ticket ticket) {
+    //public Ticket bookTicket(@RequestBody User user, @RequestBody Ticket ticket) {
+    public Ticket bookTicket(@RequestBody Map<String, String> json) {
         Random random = new Random();
-        ticket.setPrice(100.0 + 110.* random.nextDouble());
-        return bookingService.bookTicket(user, ticket);
+//        ticket.setPrice(100.0 + 110.* random.nextDouble());
+//        return bookingService.bookTicket(user, ticket);
+        return new Ticket(new Event("football"), new Date(), Arrays.asList(1, 2, 3), null, 100.1);
     }
 
     @RequestMapping(value = "/event/{eventNme}/{auditoriumName}/{date}", method = GET)
