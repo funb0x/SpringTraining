@@ -1,16 +1,15 @@
 package com.epam.springtraining.mvc;
 
+import beans.dto.BookingTicketDTO;
 import beans.models.Event;
 import beans.models.Ticket;
-import beans.models.User;
 import beans.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -31,11 +30,10 @@ public class BookingTicketController {
 
     @RequestMapping(value = "/book", method = POST)
     @ResponseBody
-    //public Ticket bookTicket(@RequestBody User user, @RequestBody Ticket ticket) {
-    public Ticket bookTicket(@RequestBody Map<String, String> json) {
+    public Ticket bookTicket(@RequestBody BookingTicketDTO dto) {
         Random random = new Random();
-//        ticket.setPrice(100.0 + 110.* random.nextDouble());
-//        return bookingService.bookTicket(user, ticket);
+        dto.getTicket().setPrice(100.0 + 110.* random.nextDouble());
+        //return bookingService.bookTicket(dto.getUser(), dto.getTicket());
         return new Ticket(new Event("football"), new Date(), Arrays.asList(1, 2, 3), null, 100.1);
     }
 
